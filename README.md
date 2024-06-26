@@ -78,11 +78,11 @@ exit
 
 ### Add .py Script in PuTTy
 
-After the database is created in Cassandra, the PySpark script is created and run in HDFS using PuTTy. The .py script is explained below
+After the database is created in Cassandra, the PySpark script is created and run in HDFS using PuTTy.
 
 ### Load Libraries
 
-The first part of the code is to load the libraries. The libraries used are all from `pyspark.sql`. This library is used to connect Python with Spark
+The first part of the code is to load the libraries. The libraries used are all from `pyspark.sql`. This library is used to connect Python with Spark.
 
 ```python
 from pyspark.sql import SparkSession
@@ -90,6 +90,8 @@ from pyspark.sql import functions
 from pyspark.sql import Row
 
 ```
+
+### Parsing Functions
 
 Then, the next part of code defines the function to parse the lines from the text files u.user, u.data and u.item into HDFS.
 
@@ -114,7 +116,10 @@ def parse_item(line):
                thriller=int(fields[21]), war=int(fields[22]), western=int(fields[23]))
 ```
 
-The next part is to initialise the Spark session and create a Spark application called `MovieLens Analysis`. 
+### Initialise Spark Session
+
+The next part is to initialise the Spark session and create a Spark application called `MovieLens Analysis`.
+
 ```python
 
 if __name__ == "__main__":
@@ -122,7 +127,9 @@ if __name__ == "__main__":
     spark = SparkSession.builder.appName("MovieLens Analysis").config("spark.cassandra.connection.host", "127.0.0.1").getOrCreate()
 ```
 
-The files are retrieved from HDFS and the parsing functions created earlier were used to convert the lines into RDD objects.
+### Parse Text Files and Convert to DataFrame
+
+The files are retrieved from HDFS and the parsing functions created earlier were used to convert the lines into Resilient Distributed Dataset (RDD). Then the RDDs are converted into Spark dataframes using `spark.createDataFrame()`.
 
 ```python
 
@@ -140,6 +147,14 @@ The files are retrieved from HDFS and the parsing functions created earlier were
     usersDataset = spark.createDataFrame(users)
     ratingsDataset = spark.createDataFrame(ratings)
     namesDataset = spark.createDataFrame(names)
+
+```
+
+### Send DataFrame to Cassandra
+
+
+
+```python
 
     # Write to Cassandra
     usersDataset.write \
