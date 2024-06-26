@@ -2,16 +2,36 @@
 
 This assignment uses uses PySpark which connects Python to Spark and Cassandra. The purpose is to extract insights from the MovieLens 100k Dataset.
 
-## Prepare Tables in Cassandra
+## Cassandra
+
+### Initiate Cassandra
+
+Before being able to extract any insights from the MovieLens 100k Dataset, the database to store the data should be created first in Cassandra using Cassandra Query Language (CQL). First, the Cassandra environment is initiated in PuTTy using the code below.
 
 ```sql
 cqlsh
 
+```
 
+## Create Database and Tables in Cassandra
+
+Next, the database is created using the code below. The database, `movielens`, is created using `KEYSPACE`. Then the tables `users`, `ratings` and `names` are created into the `movielens` keyspace. The primary keys for `users` is `user_id`, `ratings` are `user_id` and `movie_id`, and `names` is `movie_id`. 
+
+```sql
 CREATE KEYSPACE movielens WITH replication = {'class': 'SimpleStrategy', 'replication_factor': '1'} AND durable_writes = true;
 
 
 USE movielens;
+
+
+CREATE TABLE users (
+    user_id int,
+    age int,
+    gender text,
+    occupation text,
+    zip text,
+    PRIMARY KEY (user_id)
+);
 
 
 CREATE TABLE ratings (
@@ -51,30 +71,31 @@ CREATE TABLE names (
 );
 
 
-DESCRIBE TABLE ratings;
-DESCRIBE TABLE names;
-
-
 exit
 ```
 
+## PySpark
 
-## Add .py Script in PuTTy
+### Add .py Script in PuTTy
+
+After the database is created in Cassandra, the PySpark script is created and run in HDFS using PuTTy. The .py script is explained below
 
 ### Load Libraries
+
+The first part of the code is to load the libraries. The libraries used are all from `pyspark.sql`. This library is used to connect Python with Spark
 
 ```python
 from pyspark.sql import SparkSession
 from pyspark.sql import functions
 from pyspark.sql import Row
 
-# Initialize Spark session
-spark = SparkSession.builder \
-    .appName("MovieLens Analysis") \
-    .config("spark.cassandra.connection.host", "127.0.0.1") \
-    .getOrCreate()
+```
 
-# Step 1: Parse the u.user file
+Then, the next part of code defines the function to parse the lines from the text files u.user, u.data and u.item into HDFS.
+
+```python
+
+# Step 1: Parse the u.user, u.data, u.item files
 def parse_user(line):
     fields = line.split('|')
     return Row(user_id=int(fields[0]), age=int(fields[1]), gender=fields[2], occupation=fields[3], zip=fields[4])
@@ -91,10 +112,19 @@ def parse_item(line):
                drama=int(fields[13]), fantasy=int(fields[14]), film_noir=int(fields[15]), horror=int(fields[16]),
                musical=int(fields[17]), mystery=int(fields[18]), romance=int(fields[19]), sci_fi=int(fields[20]),
                thriller=int(fields[21]), war=int(fields[22]), western=int(fields[23]))
+```
+
+The next part is to initialise the Spark session and create a Spark application called `MovieLens Analysis`. 
+```python
 
 if __name__ == "__main__":
     # Create a SparkSession
     spark = SparkSession.builder.appName("MovieLens Analysis").config("spark.cassandra.connection.host", "127.0.0.1").getOrCreate()
+```
+
+The files are retrieved from HDFS and the parsing functions created earlier were used to convert the lines into RDD objects.
+
+```python
 
     # Parse data files
     lines1 = spark.sparkContext.textFile("hdfs:///user/maria_dev/ml-100k/u.user")
