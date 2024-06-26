@@ -1,0 +1,51 @@
+cqlsh
+
+
+CREATE KEYSPACE movielens WITH replication = {'class': 'SimpleStrategy', 'replication_factor': '1'} AND durable_writes = true;
+
+
+USE movielens;
+
+
+CREATE TABLE ratings (
+    user_id int,
+    movie_id int,
+    rating int,
+    time int,
+    PRIMARY KEY (user_id, movie_id)
+);
+
+
+CREATE TABLE names (
+    movie_id int PRIMARY KEY,
+    title text,
+    release_date text,
+    vid_release_date text,
+    url text,
+    unknown int,
+    action int,
+    adventure int,
+    animation int,
+    children int,
+    comedy int,
+    crime int,
+    documentary int,
+    drama int,
+    fantasy int,
+    film_noir int,
+    horror int,
+    musical int,
+    mystery int,
+    romance int,
+    sci_fi int,
+    thriller int,
+    war int,
+    western int
+);
+
+
+DESCRIBE TABLE ratings;
+DESCRIBE TABLE names;
+
+
+exit
