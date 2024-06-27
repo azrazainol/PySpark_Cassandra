@@ -270,13 +270,13 @@ Below are the SQL queries run using PySpark to extract the insights.
 
 ### Average Rating by Movie
 
-The results for average rating by movie shows the average rating for each movie. The movie ID and average rating is shown in the table.
+The first table shows the average rating by movie_id retrieved from the `ratings` dataset.
 
 ![Screenshot 2024-06-24 170444_1](https://github.com/azrazainol/STQD6324_Assignment_04/assets/152348828/9845f3f3-a997-459f-a6df-5614f391052e)
 
 ### Movies with Highest Average Ratings
 
-The second table shows the movies with the highest average ratings. This table calculates the average ratings from the `ratings` dataset and the movie names from the `names` dataset and joins the two datasets by the `movie_id`.
+The second table shows the movies with the highest average ratings. This table calculates the average ratings from the `ratings` dataset and the movie names from the `names` dataset and joins the two datasets by the "movie_id".
 
 ![Screenshot 2024-06-24 170444_2](https://github.com/azrazainol/STQD6324_Assignment_04/assets/152348828/d3ac7a38-f163-4a6d-ba02-00401f287dff)
 
