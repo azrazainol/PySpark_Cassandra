@@ -270,23 +270,31 @@ Below are the SQL queries run using PySpark to extract the insights.
 
 ### Average Rating by Movie
 
-The results for average rating by movie shows the average rating for each movie. The name of the movie and 
+The results for average rating by movie shows the average rating for each movie. The movie ID and average rating is shown in the table.
 
 ![Screenshot 2024-06-24 170444_1](https://github.com/azrazainol/STQD6324_Assignment_04/assets/152348828/9845f3f3-a997-459f-a6df-5614f391052e)
 
 ### Movies with Highest Average Ratings
 
+The second table shows the movies with the highest average ratings. This table calculates the average ratings from the `ratings` dataset and the movie names from the `names` dataset and joins the two datasets by the `movie_id`.
+
 ![Screenshot 2024-06-24 170444_2](https://github.com/azrazainol/STQD6324_Assignment_04/assets/152348828/d3ac7a38-f163-4a6d-ba02-00401f287dff)
 
 ### Favourite Genres for Frequent Users
+
+The third table shows the most watched genre by users who have rated movies on the platform for at least 50 times. This means that the users are active and frequent users of the platform. The table below takes the information from the `users` dataset, joins the user_id from the `ratings` dataset and also the movie_id from the `names` dataset. Then users who rated below 50 movies are filtered out and the user_id, age, occupation, gender, genres and count_ratings of the remaining users are displayed in the table. The output table shows the genres watched by the users who have over 50 rating counts.
 
 ![Screenshot 2024-06-24 170255_3](https://github.com/azrazainol/STQD6324_Assignment_04/assets/152348828/f64803b4-de64-434a-bb7c-38fd102d536d)
 
 ### Users Under 20 Years Old
 
+The next table displays the information of users available in the `users` dataset who are younger than 20 years old.
+
 ![Screenshot 2024-06-24 170255_4](https://github.com/azrazainol/STQD6324_Assignment_04/assets/152348828/9601cdf3-5c1e-4c21-b00b-024c57deabc8)
 
 ### Scientists between 30-40 Years Old
+
+The final table filters the `users` dataset by "scientist" occupation who are between the ages 30 to 40 years old.
 
 ![Screenshot 2024-06-24 170255_5](https://github.com/azrazainol/STQD6324_Assignment_04/assets/152348828/17855ea6-5492-4942-8a4b-ec78e8b9bddf)
 
