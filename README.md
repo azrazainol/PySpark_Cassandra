@@ -270,17 +270,25 @@ Below are the SQL queries run using PySpark to extract the insights.
 
 ### Average Rating by Movie
 
+The results for average rating by movie shows the average rating for each movie. The name of the movie and 
+
+![Screenshot 2024-06-24 170444_1](https://github.com/azrazainol/STQD6324_Assignment_04/assets/152348828/9845f3f3-a997-459f-a6df-5614f391052e)
 
 ### Movies with Highest Average Ratings
 
+![Screenshot 2024-06-24 170444_2](https://github.com/azrazainol/STQD6324_Assignment_04/assets/152348828/d3ac7a38-f163-4a6d-ba02-00401f287dff)
 
 ### Favourite Genres for Frequent Users
 
+![Screenshot 2024-06-24 170255_3](https://github.com/azrazainol/STQD6324_Assignment_04/assets/152348828/f64803b4-de64-434a-bb7c-38fd102d536d)
 
 ### Users Under 20 Years Old
 
+![Screenshot 2024-06-24 170255_4](https://github.com/azrazainol/STQD6324_Assignment_04/assets/152348828/9601cdf3-5c1e-4c21-b00b-024c57deabc8)
 
 ### Scientists between 30-40 Years Old
+
+![Screenshot 2024-06-24 170255_5](https://github.com/azrazainol/STQD6324_Assignment_04/assets/152348828/17855ea6-5492-4942-8a4b-ec78e8b9bddf)
 
 
 
