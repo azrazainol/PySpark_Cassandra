@@ -195,7 +195,11 @@ The next code snippet inserts the data from the dataframes into the tables creat
     readNames.createOrReplaceTempView("names")
 ```
 
+## SQL
 
+### Extract Insights
+
+Below are the SQL queries run using PySpark to extract the insights.
 
 ```sql
 
@@ -261,6 +265,24 @@ The next code snippet inserts the data from the dataframes into the tables creat
     spark.stop()
 
 ```
+
+## Results
+
+### Average Rating by Movie
+
+
+### Movies with Highest Average Ratings
+
+
+### Favourite Genres for Frequent Users
+
+
+### Users Under 20 Years Old
+
+
+### Scientists between 30-40 Years Old
+
+
 
 
 
