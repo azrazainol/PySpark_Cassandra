@@ -122,6 +122,7 @@ The next part is to initialise the Spark session and create a Spark application 
 
 ```python
 
+# Step 2: Start Spark
 if __name__ == "__main__":
     # Create a SparkSession
     spark = SparkSession.builder.appName("MovieLens Analysis").config("spark.cassandra.connection.host", "127.0.0.1").getOrCreate()
@@ -133,7 +134,7 @@ The files are retrieved from HDFS and the parsing functions created earlier were
 
 ```python
 
-    # Parse data files
+    # Step 3: Parse data files
     lines1 = spark.sparkContext.textFile("hdfs:///user/maria_dev/ml-100k/u.user")
     users = lines1.map(parse_user)
 
@@ -143,7 +144,7 @@ The files are retrieved from HDFS and the parsing functions created earlier were
     lines3 = spark.sparkContext.textFile("hdfs:///user/maria_dev/ml-100k/u.item")
     names = lines3.map(parse_item)
 
-    # Convert to DataFrames
+    # Step 4: Convert to Spark DataFrames
     usersDataset = spark.createDataFrame(users)
     ratingsDataset = spark.createDataFrame(ratings)
     namesDataset = spark.createDataFrame(names)
@@ -152,11 +153,11 @@ The files are retrieved from HDFS and the parsing functions created earlier were
 
 ### Send DataFrame to Cassandra
 
-
+The next code snippet inserts the data from the dataframes into the tables created in the `movielens` keyspace earlier. After the data is available on Cassandra keyspace `movielens`, the data is converted to a Spark dataframe. Finally temporary views are created to perform analysis. It is possible to perform analysis directly on the Spark dataframe but creating temporary views make analysis more convenient because SQL is widely used and it has a more readable syntax.
 
 ```python
 
-    # Write to Cassandra
+    # Step 5: Write to Cassandra
     usersDataset.write \
         .format("org.apache.spark.sql.cassandra") \
         .mode('append') \
@@ -175,7 +176,7 @@ The files are retrieved from HDFS and the parsing functions created earlier were
         .options(table="names", keyspace="movielens") \
         .save()
 
-    # Read from Cassandra into DataFrames
+    # Step 6: Read from Cassandra into DataFrames
     readUsers = spark.read \
         .format("org.apache.spark.sql.cassandra") \
         .options(table="users", keyspace="movielens").load()
@@ -188,10 +189,15 @@ The files are retrieved from HDFS and the parsing functions created earlier were
         .format("org.apache.spark.sql.cassandra") \
         .options(table="names", keyspace="movielens").load()
 
-    # Create temporary views for SQL querying
+    # Step 7: Create temporary views for SQL querying
     readUsers.createOrReplaceTempView("users")
     readRatings.createOrReplaceTempView("ratings")
     readNames.createOrReplaceTempView("names")
+```
+
+
+
+```sql
 
     # Execute SQL queries
 
