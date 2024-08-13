@@ -1,4 +1,4 @@
-# COnnecting Python to Sprk and Cassandra to Extract Data Insights
+# Connecting Python to Sprk and Cassandra to Extract Data Insights
 ## STQD6324_Assignment_04
 
 This assignment uses uses PySpark which connects Python to Spark and Cassandra. The purpose is to extract insights from the MovieLens 100k Dataset.
